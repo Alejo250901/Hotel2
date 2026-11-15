@@ -35,6 +35,14 @@ Sistema de gestión desarrollado en Java para administrar habitaciones, registra
   * Control de ocupación en habitaciones con manejo de capacidad y excepciones por cupo lleno.
   * Menú interactivo por consola protegido contra errores de lectura numérica (`InputMismatchException`).
  
+  * 🏨 Política de reservas y búsqueda de huéspedes
+
+Para realizar una reserva, el huésped debe estar previamente alojado en una habitación. Por esta razón, el sistema utiliza el método "hotel.buscarHuesped(documento)", que busca al huésped entre las habitaciones registradas.
+
+Los huéspedes que únicamente estén registrados en el sistema, pero que todavía no hayan sido alojados, no podrán realizar reservas hasta completar el proceso de alojamiento mediante la opción 3 del menú principal.
+
+Esta decisión permite mantener el funcionamiento definido para la gestión de reservas del proyecto.
+ 
   * <img width="1654" height="1081" alt="DIAGRAMA DE CLASES HOTEL" src="https://github.com/user-attachments/assets/1af794b8-bc65-4e0b-b2a1-637a27fce795" />
 
 
