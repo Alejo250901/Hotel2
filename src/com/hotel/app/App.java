@@ -51,7 +51,7 @@ public class App {
             System.out.println("9. Reporte general del hotel");
             System.out.println("10. Crear nueva habitación");
             System.out.println("0. Salir");
-            
+
             opcion = leerEntero(sc, "Seleccione una opción: ");
 
             try {
@@ -60,7 +60,7 @@ public class App {
                         System.out.println("\n--- Registrar Huésped ---");
                         int tipo = leerEntero(sc, "Tipo de huésped (1. Regular, 2. VIP): ");
                         if (tipo != 1 && tipo != 2) {
-                            System.out.println("Tipo inválido. Vueltos al menú.");
+                            System.out.println("Tipo inválido. Volviendo al menú.");
                             break;
                         }
                         System.out.print("Nombre: ");
@@ -69,6 +69,14 @@ public class App {
                         String documento = sc.nextLine();
                         int edad = leerEntero(sc, "Edad: ");
                         int noches = leerEntero(sc, "Número de noches: ");
+
+                        // CORRECCION: Validar que no exista un huésped con el mismo documento
+                        for (Huesped existente : huespedesRegistrados) {
+                            if (existente.getDocumento().equals(documento)) {
+                                throw new IllegalArgumentException(
+                                        "Ya existe un huésped registrado con el documento " + documento + ".");
+                            }
+                        }
 
                         if (tipo == 1) {
                             HuespedRegular hr = new HuespedRegular(nombre, documento, edad, noches);
@@ -104,7 +112,7 @@ public class App {
                         }
                         System.out.print("Documento del huésped a alojar: ");
                         String docAloj = sc.nextLine();
-                        
+
                         // Buscar en la lista general de registrados
                         Huesped huespedAEncontrar = null;
                         for (Huesped h : huespedesRegistrados) {
@@ -116,6 +124,13 @@ public class App {
                         if (huespedAEncontrar == null) {
                             throw new HuespedNoEncontradoException(docAloj);
                         }
+                            //CORRECCION: Validar que el huésped no esté ya alojado en otra habitación
+                        try {
+                            hotel.buscarHuesped(docAloj);
+                            throw new IllegalArgumentException("El huésped ya está alojado en una habitación.");
+                        } catch (HuespedNoEncontradoException e) {
+                        }
+                        
                         habitacion.alojarHuesped(huespedAEncontrar);
                         break;
 
@@ -163,7 +178,7 @@ public class App {
                         System.out.print("Ingrese ID del recepcionista: ");
                         String idRecV = sc.nextLine();
                         Recepcionista recVer = hotel.buscarRecepcionista(idRecV);
-                        
+
                         ArrayList<Reserva> listaRes = recVer.getReservas();
                         if (listaRes.isEmpty()) {
                             System.out.println("Este recepcionista no tiene reservas gestionadas.");
@@ -209,15 +224,14 @@ public class App {
                         break;
 
                     case 0:
-                        System.out.println("Saliendo del sistema... ¡Hasta luego, hermano!");
+                        System.out.println("Saliendo del sistema... ¡Hasta luego!");
                         break;
 
                     default:
                         System.out.println("Opción inválida. Intente de nuevo.");
                 }
-            } catch (IllegalArgumentException | HabitacionLlenaException | 
-                     HuespedNoEncontradoException | EmpleadoNoEncontradoException | 
-                     ReservaInvalidaException e) {
+            } catch (IllegalArgumentException | HabitacionLlenaException | HuespedNoEncontradoException
+                    | EmpleadoNoEncontradoException | ReservaInvalidaException e) {
                 System.out.println("Error de ejecución: " + e.getMessage());
             }
 

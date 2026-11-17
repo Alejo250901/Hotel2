@@ -9,10 +9,30 @@ public class Habitacion {
     private int capacidad;
     private ArrayList<Huesped> huespedes;
 
-    public Habitacion(String numero, int capacidad) {
-        if (capacidad <= 0) {
-            throw new IllegalArgumentException("La capacidad debe ser mayor a 0.");
+public Habitacion(String numero, int capacidad) {
+        // Validar que el número de habitación no sea nulo ni esté vacío
+        if (numero == null || numero.trim().isEmpty()) {
+            throw new IllegalArgumentException("El número de habitación no puede estar vacío.");
         }
+        
+        // Validar que el número de habitación contenga al menos un dígito (evita que pongan solo letras como nombres para habitaciones)
+        boolean tieneDigito = false;
+        for (char c : numero.toCharArray()) {
+            if (Character.isDigit(c)) {
+                tieneDigito = true;
+                break;
+            }
+        }
+
+        if (!tieneDigito) {
+            throw new IllegalArgumentException("El número de habitación debe contener al menos un número (ej. 101, 202A).");
+        }
+
+        // Validar que la capacidad sea lógica (ej: entre 1 y 10)
+        if (capacidad <= 0 || capacidad > 10) {
+            throw new IllegalArgumentException("La capacidad de la habitación debe estar entre 1 y 10 personas.");
+        }
+        
         this.numero = numero;
         this.capacidad = capacidad;
         this.huespedes = new ArrayList<>();

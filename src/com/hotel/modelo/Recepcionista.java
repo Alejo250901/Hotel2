@@ -11,11 +11,9 @@ public class Recepcionista extends Empleado {
         this.reservas = new ArrayList<>();
     }
 
-    // Sobrecarga - Versión 1: Reserva con servicio por defecto
+// Sobrecarga - Versión 1: Reserva con servicio por defecto
     public void hacerReserva(String fecha, Huesped huesped) throws ReservaInvalidaException {
-        if (fecha == null || fecha.trim().isEmpty()) {
-            throw new ReservaInvalidaException("La fecha no puede estar vacía.");
-        }
+        Validador.validarFecha(fecha); // Validación estricta del formato y fecha real
         if (huesped == null) {
             throw new ReservaInvalidaException("Debe indicarse un huésped válido.");
         }
@@ -26,9 +24,7 @@ public class Recepcionista extends Empleado {
 
     // Sobrecarga - Versión 2: Reserva con servicio específico
     public void hacerReserva(String fecha, String servicio, Huesped huesped) throws ReservaInvalidaException {
-        if (fecha == null || fecha.trim().isEmpty()) {
-            throw new ReservaInvalidaException("La fecha no puede estar vacía.");
-        }
+        Validador.validarFecha(fecha); // Validación estricta del formato y fecha real
         if (servicio == null || servicio.trim().isEmpty()) {
             throw new ReservaInvalidaException("El servicio no puede estar vacío.");
         }

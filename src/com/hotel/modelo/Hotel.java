@@ -13,7 +13,7 @@ public class Hotel {
         this.nombre = nombre;
         this.habitaciones = new ArrayList<>();
         this.empleados = new ArrayList<>();
-        
+
         // Creación interna de las habitaciones iniciales (Composición)
         habitaciones.add(new Habitacion("101", 2));
         habitaciones.add(new Habitacion("102", 3));
@@ -21,6 +21,12 @@ public class Hotel {
     }
 
     public void agregarHabitacion(String numero, int capacidad) {
+        if (numero == null || numero.trim().isEmpty()) {
+            throw new IllegalArgumentException("El número de habitación no puede estar vacío.");
+        }
+        if (buscarHabitacion(numero) != null) {
+            throw new IllegalArgumentException("Ya existe la habitación " + numero + ".");
+        }
         habitaciones.add(new Habitacion(numero, capacidad));
         System.out.println("Habitación '" + numero + "' creada con capacidad " + capacidad);
     }
@@ -77,12 +83,14 @@ public class Hotel {
         System.out.println("\n========== REPORTE GENERAL DEL HOTEL: " + nombre + " ==========");
         System.out.println("\n--- Habitaciones ---");
         for (Habitacion hab : habitaciones) {
-            System.out.println("Habitación: " + hab.getNumero() + " | Ocupación: " + hab.getHuespedes().size() + "/" + hab.getCapacidad());
+            System.out.println("Habitación: " + hab.getNumero() + " | Ocupación: " + hab.getHuespedes().size() + "/"
+                    + hab.getCapacidad());
         }
 
         System.out.println("\n--- Empleados (" + empleados.size() + ") ---");
         for (Empleado e : empleados) {
-            // Polimorfismo dinámico: ejecuta el generarReporte() de Recepcionista o Camarero
+            // Polimorfismo dinámico: ejecuta el generarReporte() de Recepcionista o
+            // Camarero
             System.out.println(e.generarReporte());
             System.out.println("----------------------------------------");
         }
