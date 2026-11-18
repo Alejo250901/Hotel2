@@ -11,8 +11,8 @@ public abstract class Huesped {
         if (edad < 0 || edad > 120) {
             throw new IllegalArgumentException("Edad inválida: " + edad);
         }
-        this.nombre = nombre;
-        this.documento = documento;
+        this.nombre = nombre.trim();
+        this.documento = documento.trim();
         this.edad = edad;
     }
 

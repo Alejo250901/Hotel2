@@ -25,7 +25,7 @@ public Habitacion(String numero, int capacidad) {
         }
 
         if (!tieneDigito) {
-            throw new IllegalArgumentException("El número de habitación debe contener al menos un número (ej. 101, 202A).");
+            throw new IllegalArgumentException("El número de habitación debe contener al menos un número (ej. 101, 202).");
         }
 
         // Validar que la capacidad sea lógica (ej: entre 1 y 10)

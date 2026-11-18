@@ -21,14 +21,12 @@ public class Hotel {
     }
 
     public void agregarHabitacion(String numero, int capacidad) {
-        if (numero == null || numero.trim().isEmpty()) {
-            throw new IllegalArgumentException("El número de habitación no puede estar vacío.");
-        }
-        if (buscarHabitacion(numero) != null) {
+        Validador.validarNumeroHabitacion(numero);
+        if (buscarHabitacion(numero.trim()) != null) {
             throw new IllegalArgumentException("Ya existe la habitación " + numero + ".");
         }
-        habitaciones.add(new Habitacion(numero, capacidad));
-        System.out.println("Habitación '" + numero + "' creada con capacidad " + capacidad);
+        habitaciones.add(new Habitacion(numero.trim(), capacidad));
+        System.out.println("Habitación '" + numero.trim() + "' creada con capacidad " + capacidad);
     }
 
     public void agregarEmpleado(Empleado e) {
@@ -76,6 +74,20 @@ public class Hotel {
         }
         if (!hayRecepcionistas) {
             System.out.println("No hay recepcionistas registrados.");
+        }
+    }
+
+    public void listarHabitaciones() {
+        System.out.println("--- Habitaciones Disponibles en el Hotel (Pisos 1-3: 101-120, 201-220, 301-320) ---");
+        if (habitaciones.isEmpty()) {
+            System.out.println("No hay habitaciones creadas.");
+            return;
+        }
+        for (Habitacion hab : habitaciones) {
+            int ocupados = hab.getHuespedes().size();
+            int cap = hab.getCapacidad();
+            String estado = (ocupados < cap) ? "Disponible (" + (cap - ocupados) + " cupos)" : "LLENA";
+            System.out.println(" - Habitación " + hab.getNumero() + " | Ocupación: " + ocupados + "/" + cap + " -> " + estado);
         }
     }
 
