@@ -21,7 +21,7 @@ public class Hotel {
     }
 
     public void agregarHabitacion(String numero, int capacidad) {
-        Validador.validarNumeroHabitacion(numero);
+        Validador.validarNumeroHabitacion(numero); // El hotel le esta pidiendo a la clase Validador que compruebe si el número de habitación recibido es válido
         if (buscarHabitacion(numero.trim()) != null) {
             throw new IllegalArgumentException("Ya existe la habitación " + numero + ".");
         }
@@ -43,6 +43,7 @@ public class Hotel {
         return null;
     }
 
+    //Este método sirve para podamos buscar un huésped utilizando su documento.//
     public Huesped buscarHuesped(String documento) throws HuespedNoEncontradoException {
         for (Habitacion habitacion : habitaciones) {
             try {
@@ -56,7 +57,7 @@ public class Hotel {
 
     public Recepcionista buscarRecepcionista(String id) throws EmpleadoNoEncontradoException {
         for (Empleado e : empleados) {
-            if (e.getId().equals(id) && e instanceof Recepcionista) {
+            if (e.getId().equals(id) && e instanceof Recepcionista) { // instanceof es un operador de java que permite comprobar si un objeto pertenece a una clase determinada o a alguna de sus clases hijas
                 return (Recepcionista) e;
             }
         }
